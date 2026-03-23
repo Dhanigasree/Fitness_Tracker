@@ -25,7 +25,7 @@ spec:
           # ✔ Direct env variables added
           envFrom: 
             - configMapRef:
-                name: fitness-configMap
+                name: fitness-configmap
           env:
             - name: MONGODB_URI
               value: "mongodb://mongodb-service:27017/fitness-tracker"
