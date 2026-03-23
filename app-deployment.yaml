@@ -23,6 +23,9 @@ spec:
             - containerPort: 5000
           # ✔ All configMap vars removed
           # ✔ Direct env variables added
+          envForm: 
+            - configMapRef:
+                name: fitness-configMap
           env:
             - name: MONGODB_URI
               value: "mongodb://mongodb-service:27017/fitness-tracker"
