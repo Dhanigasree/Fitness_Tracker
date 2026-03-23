@@ -23,7 +23,7 @@ spec:
             - containerPort: 5000
           # ✔ All configMap vars removed
           # ✔ Direct env variables added
-          envForm: 
+          envFrom: 
             - configMapRef:
                 name: fitness-configMap
           env:
