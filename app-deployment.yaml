@@ -26,7 +26,15 @@ spec:
         - name: fitness-tracker-app
           image: pulkit197/fitness_tracker-master-copy3-fitness-app:latest
           ports:
-            - containerPort: 5000
+            - containerPort: 5000        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+
+          
           # ✔ All configMap vars removed
           # ✔ Direct env variables added
           envFrom: 
