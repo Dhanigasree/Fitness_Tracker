@@ -37,18 +37,6 @@ spec:
       volumes:
        - name: dhaniga-data
          hostPath: 
-           path: /ust-data
+           path: /ust
            type: DirectoryOrCreate
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mongodb-service
-spec:
-  selector:
-    app: mongodb
-  ports:
-  - port: 27017
-    targetPort: 27017
-  type: ClusterIP
- 
+
