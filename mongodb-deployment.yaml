@@ -30,9 +30,13 @@ spec:
           requests:
             memory: "256Mi"
             cpu: "100m"
+        volumeMounts: 
+         - name: dhaniga-data
+           mountpath: /data/db
       volumes:
        - name: dhaniga-data
-         emptyDir: {}
+         emptyDir: 
+           sizeLimit: "512Mi"
 ---
 apiVersion: v1
 kind: Service
