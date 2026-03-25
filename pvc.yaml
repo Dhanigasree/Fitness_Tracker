@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: persistentVolumeClaim 
+metadata:
+  name: mongo-pvc 
+  namespace: dhanigas-ns 
+spec: 
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
