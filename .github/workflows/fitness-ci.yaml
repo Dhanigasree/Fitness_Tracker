@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Clone Repo
-      uses: actions/checkout@4
+      uses: actions/checkout@v4
     - name: Setup Docker 
       uses: docker/setup-buildx-action@v3
     - name: Docker Hub login
