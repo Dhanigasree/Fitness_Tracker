@@ -22,7 +22,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Build Image
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.tag }}
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.tag }} .
     - name: Scan Image
       run: trivy image --severity HIGH,CRITICAL ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.tag }}
     - name: Push Docker Image
