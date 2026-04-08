@@ -15,7 +15,7 @@ jobs:
     - name: Clone Repo
       uses: actions/checkout@v4
     - name: SonarQube
-      uses: SonarSource/sonarqube-scan-action@v2
+      uses: SonarSource/sonarcloud-github-action@v2
     - name: Setup Docker 
       uses: docker/setup-buildx-action@v3
     - name: Docker Hub login
