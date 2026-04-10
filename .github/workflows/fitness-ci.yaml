@@ -64,3 +64,7 @@ jobs:
       #   timeout-minutes: 5
       #   env:
       #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Snyk scan
+        uses: snyk/actions@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
