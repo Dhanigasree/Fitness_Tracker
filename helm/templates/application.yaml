@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/Suryaa11/Fitness_Tracker.git
-    targetRevision: main
+    targetRevision: master
     path: helm
     helm:
       values: |
