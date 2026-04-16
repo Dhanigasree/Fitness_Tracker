@@ -8,14 +8,14 @@ spec:
   source:
     repoURL: https://github.com/Suryaa11/Fitness_Tracker.git
     targetRevision: main
-    path: Retail-chart
+    path: helm
     helm:
       values: |
         userprofile:
           activeVersion: blue
   destination:
     server: https://kubernetes.default.svc
-    namespace: retail
+    namespace: fitness-ns
   syncPolicy:
     automated:
       prune: true
