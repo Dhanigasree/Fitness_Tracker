@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongodb
-  namespace: dhanigas-ns
+  namespace: fitness
 spec:
   replicas: 3
   strategy:
@@ -13,35 +13,49 @@ spec:
   selector:
     matchLabels:
       app: mongodb
+
   template:
     metadata:
       labels:
         app: mongodb
+
     spec:
       containers:
-      - name: mongodb
-        image: mongo:7-jammy
-       
-        ports:
-        - containerPort: 27017
-        volumeMounts:
-          - name: mongo-vol
-            mountPath: /data/db
-    volumes:
-      - name: mongo-data
-        persistentVolumeClaim: 
-          calimName: mongo-pvc
+        - name: mongodb
+          image: mongo:7-jammy
+          ports:
+            - containerPort: 27017
+
+          volumeMounts:
+            - name: mongo-vol
+              mountPath: /data/db
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "300m"
+              memory: "512Mi"
+
+      volumes:
+        - name: mongo-vol
+          persistentVolumeClaim:
+            claimName: mongo-pvc
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: mongodb-service
+  namespace: fitness
 spec:
   selector:
     app: mongodb
+
   ports:
-  - port: 27017
-    targetPort: 27017
+    - port: 27017
+      targetPort: 27017
+
   type: ClusterIP
- 
  
