@@ -5,7 +5,7 @@ metadata:
   namespace: dhanigas-ns
 spec:
   replicas: 2
-   strategy:
+  strategy:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 1
