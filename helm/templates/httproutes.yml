@@ -10,7 +10,7 @@ spec:
     - matches:
         - path:
             type: PathPrefix
-            value: /fitness
+            value: /
       filters:
         - type: URLRewrite
           urlRewrite:
