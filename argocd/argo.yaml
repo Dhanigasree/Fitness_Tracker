@@ -8,7 +8,7 @@ spec:
 
   source:
     repoURL: https://github.com/Dhanigasree/Fitness_Tracker.git
-    targetRevision: HEAD
+    targetRevision: master
     path: k8s
 
   destination:
