@@ -18,7 +18,11 @@ kind: Rollout
 metadata:
   name: fitness-tracker-app
 spec:
+<<<<<<< HEAD
   replicas: 1
+=======
+  replicas: 4
+>>>>>>> 1e90607626844627828ce20ac6c0fb5328630f6b
 
   strategy:
     canary: {} 
