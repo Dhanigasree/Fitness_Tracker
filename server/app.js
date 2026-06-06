@@ -13,6 +13,16 @@ const app = express();
 // Environment configuration
 require('dotenv').config();
 
+const redactMongoUri = (uri) => uri.replace(/\/\/.*@/, '//***:***@');
+
+const sanitizeBody = (body = {}) => {
+  const sanitized = { ...body };
+  if (sanitized.password) {
+    sanitized.password = '[REDACTED]';
+  }
+  return sanitized;
+};
+
 // MongoDB connection with environment variable support
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/fitness-tracker';
 
@@ -29,7 +39,7 @@ const connectDB = async () => {
   } catch (err) {
     logger.error('Database connection failed', {
       error: err.message,
-      mongoUri: MONGODB_URI.replace(/\/\/.*@/, '//***:***@'), // Hide credentials
+      mongoUri: redactMongoUri(MONGODB_URI),
       action: 'mongodb_connection_failed'
     });
     console.error('❌ MongoDB connection error:', err.message);
@@ -71,7 +81,7 @@ app.use('/api/auth', (req, res, next) => {
     method: req.method,
     path: req.path,
     url: req.url,
-    body: req.body,
+    body: sanitizeBody(req.body),
     query: req.query,
     headers: req.headers,
     action: 'api_auth_request'
@@ -97,10 +107,10 @@ app.listen(PORT, HOST, () => {
     host: HOST,
     port: PORT,
     environment: process.env.NODE_ENV || 'development',
-    database: MONGODB_URI.replace(/\/\/.*@/, '//***:***@'),
+    database: redactMongoUri(MONGODB_URI),
     action: 'server_started'
   });
   console.log(`🚀 Server running on http://${HOST}:${PORT}`);
   console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🗄️  Database: ${MONGODB_URI}`);
+  console.log(`🗄️  Database: ${redactMongoUri(MONGODB_URI)}`);
 });

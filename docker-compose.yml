@@ -28,7 +28,7 @@ services:
   datadog-agent:
     image: gcr.io/datadoghq/agent:7
     environment:
-      - DD_API_KEY=17f70c28759e381392e0f9efd594582b
+      - DD_API_KEY=${DD_API_KEY:?Set DD_API_KEY in your local .env file}
       - DD_SITE=datadoghq.com
       - DD_APM_ENABLED=true
       - DD_LOGS_ENABLED=true

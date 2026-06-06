@@ -4,6 +4,14 @@ const { logger } = require('../datadog');
 
 const router = express.Router();
 
+const sanitizeBody = (body = {}) => {
+  const sanitized = { ...body };
+  if (sanitized.password) {
+    sanitized.password = '[REDACTED]';
+  }
+  return sanitized;
+};
+
 // User schema for MongoDB
 const userSchema = new mongoose.Schema({
   fullname: { type: String, required: true },
@@ -59,7 +67,7 @@ router.post('/register', async (req, res) => {
   logger.info('REGISTER ENDPOINT HIT', {
     method: req.method,
     url: req.url,
-    body: req.body,
+    body: sanitizeBody(req.body),
     headers: req.headers,
     action: 'register_endpoint_accessed'
   });
@@ -151,7 +159,7 @@ router.post('/login', async (req, res) => {
   logger.info('LOGIN ENDPOINT HIT', {
     method: req.method,
     url: req.url,
-    body: req.body,
+    body: sanitizeBody(req.body),
     headers: req.headers,
     action: 'login_endpoint_accessed'
   });

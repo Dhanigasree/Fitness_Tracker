@@ -1,0 +1,34 @@
+namespace: fitness-ns
+
+image:
+  repository: pulkit197/fitness_tracker-master-copy3-fitness-app
+  tag: latest
+
+replicaCount: 2
+
+app:
+  port: "5000"
+  host: "0.0.0.0"
+  nodeEnv: production
+
+datadog:
+  env: production
+  service: fitness-tracker-app
+  version: "1.0.0"
+
+aws:
+  region: us-east-1
+  serviceAccountName: fitness-tracker-secrets
+  # Replace with the IAM role used by External Secrets Operator to read this app's secrets.
+  roleArn: arn:aws:iam::123456789012:role/fitness-tracker-external-secrets
+
+externalSecrets:
+  enabled: true
+  refreshInterval: 1h
+  secretStoreName: fitness-tracker-aws-secrets
+  targetSecretName: fitness-tracker-runtime-secrets
+  # AWS Secrets Manager secret encrypted with the app KMS key.
+  remoteSecretName: fitness-tracker/production/runtime
+  keys:
+    mongodbUri: MONGODB_URI
+    datadogApiKey: DD_API_KEY

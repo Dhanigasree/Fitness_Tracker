@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fitness-tracker-app
-  namespace: fitness-ns
+  namespace: {{ .Values.namespace | default "fitness-ns" }}
 spec:
-  replicas: 2
+  replicas: {{ .Values.replicaCount | default 2 }}
   selector:
     matchLabels:
       app: fitness-tracker-app
@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: fitness-tracker-app
-          image: pulkit197/fitness_tracker-master-copy3-fitness-app:latest
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: 5000
           resources:
@@ -48,9 +48,9 @@ spec:
             # Datadog APM (tracing) env variables
             - name: MONGODB_URI
               valueFrom:
-                configMapKeyRef:
-                    name: fitness-configmap
-                    key: MONGODB_URI
+                secretKeyRef:
+                  name: {{ .Values.externalSecrets.targetSecretName | quote }}
+                  key: {{ .Values.externalSecrets.keys.mongodbUri | quote }}
             - name: PORT
               valueFrom:
                 configMapKeyRef:
@@ -73,18 +73,23 @@ spec:
             - name: DD_TRACE_AGENT_PORT
               value: "8126"
             - name: DD_ENV
-              value: "production"
+              value: {{ .Values.datadog.env | quote }}
             - name: DD_SERVICE
-              value: "fitness-tracker-app"
+              value: {{ .Values.datadog.service | quote }}
             - name: DD_VERSION
-              value: "1.0.0"
+              value: {{ .Values.datadog.version | quote }}
+            - name: DD_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.externalSecrets.targetSecretName | quote }}
+                  key: {{ .Values.externalSecrets.keys.datadogApiKey | quote }}
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
   name: fitness-tracker-service
-  namespace: fitness-ns
+  namespace: {{ .Values.namespace | default "fitness-ns" }}
 spec:
   selector:
     app: fitness-tracker-app
